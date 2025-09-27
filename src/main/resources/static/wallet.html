@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthFirst - My Records</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Inter, "Noto Sans", sans-serif;
+            background-color: #fafafa;
+        }
+        .header {
+            border-bottom: 1px solid #ededed;
+            padding: 12px 40px;
+        }
+        .brand-name {
+            color: #141414;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 32px;
+            align-items: center;
+        }
+        .dropdown-menu {
+            border-radius: 12px;
+            border: 1px solid #dbdbdb;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .dropdown-item {
+            padding: 12px 20px;
+            font-size: 14px;
+            color: #141414;
+        }
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #141414;
+        }
+        .dropdown-toggle {
+            background: none;
+            border: none;
+            color: #141414;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        .dropdown-toggle:hover {
+            background-color: #f0f0f0;
+        }
+        .user-profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .user-profile:hover {
+            border-color: #141414;
+        }
+        .main-container {
+            padding: 20px 160px;
+        }
+        .content-container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .page-title {
+            color: #141414;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
+            padding: 16px;
+            min-width: 288px;
+        }
+        .upload-area {
+            border: 2px dashed #dbdbdb;
+            border-radius: 12px;
+            padding: 56px 24px;
+            margin: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .upload-area.dragover {
+            background-color: rgba(76, 175, 80, 0.1);
+            border-color: #4CAF50;
+        }
+        .upload-title {
+            color: #141414;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
+            margin-bottom: 8px;
+        }
+        .upload-text {
+            color: #141414;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: normal;
+            margin-bottom: 24px;
+        }
+        .upload-btn {
+            background-color: #ededed;
+            color: #141414;
+            border: none;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: normal;
+            letter-spacing: 0.015em;
+            min-width: 84px;
+            max-width: 480px;
+            height: 40px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .upload-btn:hover {
+            background-color: #dbdbdb;
+        }
+        .history-title {
+            color: #141414;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
+            padding: 20px 16px 12px 16px;
+        }
+        .records-table {
+            border: 1px solid #dbdbdb;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 12px 16px;
+        }
+        .table-header {
+            background-color: #fafafa;
+            color: #141414;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: normal;
+            padding: 12px 16px;
+        }
+        .table-cell {
+            padding: 8px 16px;
+            height: 72px;
+            vertical-align: middle;
+        }
+        .file-name {
+            color: #141414;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: normal;
+            width: 400px;
+        }
+        .file-detail {
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: normal;
+            width: 400px;
+        }
+        .file-preview {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 12px;
+        }
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+        .file-info {
+            display: flex;
+            align-items: center;
+        }
+        .progress {
+            height: 6px;
+            width: 100%;
+            margin-top: 8px;
+        }
+        .file-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .file-action-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .file-action-btn:hover {
+            color: #141414;
+        }
+        .alert {
+            margin: 16px;
+            border-radius: 12px;
+        }
+        .hidden {
+            display: none;
+        }
+        .modal-content {
+            border-radius: 12px;
+        }
+        .modal-header {
+            border-bottom: 1px solid #dbdbdb;
+        }
+        .modal-footer {
+            border-top: 1px solid #dbdbdb;
+        }
+        .preview-content {
+            max-height: 70vh;
+            overflow: auto;
+        }
+        .preview-image {
+            max-width: 100%;
+            max-height: 60vh;
+            display: block;
+            margin: 0 auto;
+        }
+        .preview-pdf {
+            width: 100%;
+            height: 70vh;
+            border: none;
+        }
+        .preview-text {
+            white-space: pre-wrap;
+            font-family: monospace;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .unsupported-file {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        @media (max-width: 1200px) {
+            .main-container {
+                padding: 20px 80px;
+            }
+        }
+        @media (max-width: 992px) {
+            .main-container {
+                padding: 20px 40px;
+            }
+        }
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 20px 16px;
+            }
+            .header {
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="header d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-3">
+        <h2 class="brand-name m-0">HealthFirst</h2>
+    </div>
+    <div class="nav-container">
+        <nav class="d-flex gap-4">
+            <a class="nav-link" href="#">Dashboard</a>
+        </nav>
+        <div class="dropdown">
+            <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-bars me-2"></i>Menu
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#"><i class="fas fa-calendar-plus me-2"></i>Schedule Appointments</a></li>
+                <li><a class="dropdown-item" href="#"><i class="fas fa-syringe me-2"></i>My Vaccine Progress</a></li>
+                <li><a class="dropdown-item" href="#"><i class="fas fa-file-medical me-2"></i>Records</a></li>
+                <li><a class="dropdown-item" href="#"><i class="fas fa-vial me-2"></i>Vaccine Availability</a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <div class="user-profile dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                JD
+            </div>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>My Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<main class="main-container">
+    <div class="content-container d-flex flex-column">
+        <div class="p-3">
+            <h1 class="page-title">My Records</h1>
+        </div>
+
+        <!-- Hidden file input -->
+        <input type="file" id="fileInput" class="hidden" multiple>
+
+        <!-- Alert messages container -->
+        <div id="alertContainer"></div>
+
+        <div class="p-3">
+            <div class="upload-area" id="dropZone">
+                <div class="mb-4">
+                    <p class="upload-title">Drag and drop files here</p>
+                    <p class="upload-text">Or click to browse your files</p>
+                </div>
+                <button class="upload-btn" id="uploadButton">Upload Files</button>
+            </div>
+        </div>
+
+        <h2 class="history-title">Upload History</h2>
+
+        <div class="records-table">
+            <table class="table m-0">
+                <thead>
+                <tr>
+                    <th class="table-header file-name">File Name</th>
+                    <th class="table-header file-detail">Upload Date</th>
+                    <th class="table-header file-detail">File Type</th>
+                    <th class="table-header file-detail">Actions</th>
+                </tr>
+                </thead>
+                <tbody id="fileTableBody">
+                <!-- Files will be added here dynamically from backend -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<!-- File Preview Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel">File Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body preview-content" id="previewBody">
+                <!-- Preview content will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="downloadPreview">Download</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Backend API base URL
+    const API_BASE_URL = 'http://localhost:8080/api/files';
+
+    // Store current file for preview/download
+    let currentPreviewFile = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get DOM elements
+        const fileInput = document.getElementById('fileInput');
+        const uploadButton = document.getElementById('uploadButton');
+        const dropZone = document.getElementById('dropZone');
+        const fileTableBody = document.getElementById('fileTableBody');
+        const alertContainer = document.getElementById('alertContainer');
+
+        // Initialize modal with safety check
+        let previewModal;
+        const modalElement = document.getElementById('previewModal');
+        if (modalElement && typeof bootstrap !== 'undefined') {
+            previewModal = new bootstrap.Modal(modalElement);
+        }
+
+        const previewBody = document.getElementById('previewBody');
+        const downloadPreviewBtn = document.getElementById('downloadPreview');
+
+        // Load files from backend when page loads
+        loadFilesFromBackend();
+
+        // Event listener for upload button
+        uploadButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Event listener for file selection
+        fileInput.addEventListener('change', handleFileSelection);
+
+        // Drag and drop event handlers
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        // Highlight drop zone when item is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropZone.classList.add('dragover');
+        }
+
+        function unhighlight() {
+            dropZone.classList.remove('dragover');
+        }
+
+        // Handle dropped files
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        function handleFileSelection() {
+            const files = fileInput.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            if (files.length === 0) return;
+
+            // Show loading message
+            showAlert(`Uploading ${files.length} file(s)...`, 'info');
+
+            // Process each file
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                uploadFileToBackend(file);
+            }
+
+            // Reset file input
+            fileInput.value = '';
+        }
+
+        // Load files from backend API
+        async function loadFilesFromBackend() {
+            try {
+                const response = await fetch(API_BASE_URL);
+                if (!response.ok) {
+                    throw new Error('Failed to load files');
+                }
+
+                const files = await response.json();
+                fileTableBody.innerHTML = ''; // Clear existing content
+
+                files.forEach(file => {
+                    createTableRow(file);
+                });
+
+            } catch (error) {
+                console.error('Error loading files:', error);
+                showAlert('Failed to load files from server', 'danger');
+            }
+        }
+
+        // Upload file to backend API
+        async function uploadFileToBackend(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch(API_BASE_URL + '/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(errorText);
+                }
+
+                const result = await response.text();
+                showAlert(`File "${file.name}" uploaded successfully!`, 'success');
+
+                // Reload files from backend to show the new file
+                loadFilesFromBackend();
+
+            } catch (error) {
+                console.error('Upload error:', error);
+                showAlert(`Upload failed: ${error.message}`, 'danger');
+            }
+        }
+
+        // DELETE FILE FUNCTION - ADD THIS MISSING FUNCTION
+        async function deleteFile(fileData) {
+            if (!confirm(`Are you sure you want to delete "${fileData.originalFileName}"?`)) {
+                return; // User cancelled deletion
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/${fileData.id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to delete file');
+                }
+
+                showAlert(`File "${fileData.originalFileName}" deleted successfully!`, 'success');
+
+                // Reload files from backend to update the table
+                loadFilesFromBackend();
+
+            } catch (error) {
+                console.error('Delete error:', error);
+                showAlert(`Delete failed: ${error.message}`, 'danger');
+            }
+        }
+
+        function createTableRow(fileData) {
+            const row = document.createElement('tr');
+
+            // File info cell
+            const fileNameCell = document.createElement('td');
+            fileNameCell.className = 'table-cell';
+
+            const fileInfoDiv = document.createElement('div');
+            fileInfoDiv.className = 'file-info';
+
+            // Create icon based on file type
+            const fileIcon = document.createElement('div');
+            fileIcon.className = 'file-icon';
+
+            const icon = document.createElement('i');
+            if (fileData.fileType && fileData.fileType.startsWith('image/')) {
+                icon.className = 'far fa-file-image';
+            } else if (fileData.fileType === 'application/pdf') {
+                icon.className = 'far fa-file-pdf';
+            } else if (fileData.fileType && fileData.fileType.startsWith('text/')) {
+                icon.className = 'far fa-file-alt';
+            } else {
+                icon.className = 'far fa-file';
+            }
+
+            fileIcon.appendChild(icon);
+            fileInfoDiv.appendChild(fileIcon);
+
+            const fileNameSpan = document.createElement('span');
+            fileNameSpan.className = 'file-name';
+            fileNameSpan.textContent = fileData.originalFileName || fileData.fileName;
+            fileInfoDiv.appendChild(fileNameSpan);
+
+            fileNameCell.appendChild(fileInfoDiv);
+
+            // Upload date cell
+            const dateCell = document.createElement('td');
+            dateCell.className = 'table-cell file-detail';
+
+            // Format date for display
+            const uploadDate = new Date(fileData.uploadDate);
+            const formattedDate = uploadDate.toLocaleDateString('en-CA'); // YYYY-MM-DD format
+            dateCell.textContent = formattedDate;
+
+            // File type cell
+            const typeCell = document.createElement('td');
+            typeCell.className = 'table-cell file-detail';
+
+            // Determine file type for display
+            let fileType = 'Unknown';
+            if (fileData.fileType) {
+                if (fileData.fileType.startsWith('image/')) {
+                    fileType = 'Image';
+                } else if (fileData.fileType === 'application/pdf') {
+                    fileType = 'PDF';
+                } else if (fileData.fileType.startsWith('text/')) {
+                    fileType = 'Text';
+                } else {
+                    fileType = fileData.fileType;
+                }
+            }
+            typeCell.textContent = fileType;
+
+            // Actions cell
+            const actionsCell = document.createElement('td');
+            actionsCell.className = 'table-cell file-detail';
+
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'file-actions';
+
+            // View button
+            const viewButton = document.createElement('button');
+            viewButton.className = 'file-action-btn';
+            viewButton.title = 'View file';
+            const viewIcon = document.createElement('i');
+            viewIcon.className = 'far fa-eye';
+            viewButton.appendChild(viewIcon);
+
+            // Download button
+            const downloadButton = document.createElement('button');
+            downloadButton.className = 'file-action-btn';
+            downloadButton.title = 'Download file';
+            const downloadIcon = document.createElement('i');
+            downloadIcon.className = 'fas fa-download';
+            downloadButton.appendChild(downloadIcon);
+
+            // DELETE button
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'file-action-btn';
+            deleteButton.title = 'Delete file';
+            deleteButton.style.color = '#dc3545'; // Red color for delete
+            const deleteIcon = document.createElement('i');
+            deleteIcon.className = 'far fa-trash-alt';
+            deleteButton.appendChild(deleteIcon);
+
+            // Add all buttons to actions div
+            actionsDiv.appendChild(viewButton);
+            actionsDiv.appendChild(downloadButton);
+            actionsDiv.appendChild(deleteButton);
+            actionsCell.appendChild(actionsDiv);
+
+            // Add all cells to the row
+            row.appendChild(fileNameCell);
+            row.appendChild(dateCell);
+            row.appendChild(typeCell);
+            row.appendChild(actionsCell);
+
+            // Add the row to the table
+            fileTableBody.appendChild(row);
+
+            // Add event listeners for action buttons
+            viewButton.addEventListener('click', () => {
+                previewFile(fileData);
+            });
+
+            downloadButton.addEventListener('click', () => {
+                downloadFile(fileData);
+            });
+
+            // Add event listener for DELETE button
+            deleteButton.addEventListener('click', () => {
+                deleteFile(fileData);
+            });
+        }
+
+        function previewFile(fileData) {
+            // For now, we'll just show file info since we don't have actual file content
+            previewBody.innerHTML = `
+                <div class="unsupported-file">
+                    <i class="far fa-file fa-3x mb-3"></i>
+                    <h4>File Information</h4>
+                    <p><strong>Name:</strong> ${fileData.originalFileName || fileData.fileName}</p>
+                    <p><strong>Type:</strong> ${fileData.fileType || 'Unknown'}</p>
+                    <p><strong>Size:</strong> ${formatFileSize(fileData.fileSize)}</p>
+                    <p><strong>Uploaded:</strong> ${new Date(fileData.uploadDate).toLocaleString()}</p>
+                    <p class="mt-3">File preview not available in this version.</p>
+                    <p>You can download the file to view it.</p>
+                </div>
+            `;
+
+            currentPreviewFile = fileData;
+            document.getElementById('previewModalLabel').textContent = `File Info: ${fileData.originalFileName || fileData.fileName}`;
+            if (previewModal) {
+                previewModal.show();
+            }
+        }
+
+        function downloadFile(fileData) {
+            // Since we don't have the actual file content from backend, we'll simulate download
+            // In a real implementation, you'd need a download endpoint
+            showAlert(`Download functionality would be implemented with a proper download endpoint`, 'info');
+
+            // Simulated download link (would be replaced with actual backend download)
+            const link = document.createElement('a');
+            link.href = '#'; // Would be actual download URL
+            link.download = fileData.originalFileName || fileData.fileName;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function formatFileSize(bytes) {
+            if (!bytes) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showAlert(message, type = 'info') {
+            // Try to find existing alert div
+            var alertDiv = document.getElementById('alert');
+
+            // If alert div doesn't exist, create it
+            if (!alertDiv) {
+                alertDiv = document.createElement('div');
+                alertDiv.id = 'alert';
+
+                // Create a container for alerts if it doesn't exist
+                var alertContainer = document.getElementById('alert-container');
+                if (!alertContainer) {
+                    alertContainer = document.createElement('div');
+                    alertContainer.id = 'alert-container';
+                    alertContainer.style.position = 'fixed';
+                    alertContainer.style.top = '20px';
+                    alertContainer.style.right = '20px';
+                    alertContainer.style.zIndex = '1000';
+                    document.body.appendChild(alertContainer);
+                }
+
+                alertContainer.appendChild(alertDiv);
+            }
+
+            // Set alert content and attributes
+            alertDiv.setAttribute("role", "alert");
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+
+            // Show the alert
+            alertDiv.style.display = 'block';
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (alertDiv.parentElement) {
+                    alertDiv.parentElement.removeChild(alertDiv);
+                }
+            }, 5000);
+        }
+
+        // Set download button functionality for modal
+        if (downloadPreviewBtn) {
+            downloadPreviewBtn.onclick = function() {
+                if (currentPreviewFile) {
+                    downloadFile(currentPreviewFile);
+                    if (previewModal) {
+                        previewModal.hide();
+                    }
+                }
+            };
+        }
+    });
+</script>
+</body>
+</html>
