@@ -1,7 +1,7 @@
 package com.vaccination_portal_tracker.vaccination_portal_tracker.controller;
 
-import com.sliit.vaccinationportalwallet.model.FileMetadata;
-import com.sliit.vaccinationportalwallet.service.FileStorageService;
+import com.vaccination_portal_tracker.vaccination_portal_tracker.model.FileMetadata;
+import com.vaccination_portal_tracker.vaccination_portal_tracker.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,6 @@ public class FileUploadController {
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
-            // Validate file type
             if (file.isEmpty()) {
                 return ResponseEntity.badRequest().body("File is empty");
             }
@@ -43,7 +42,6 @@ public class FileUploadController {
         return fileStorageService.getAllFiles();
     }
 
-    // ADD DELETE ENDPOINT
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteFile(@PathVariable Long id) {
         try {
@@ -54,7 +52,6 @@ public class FileUploadController {
         }
     }
 
-    // ADD GET FILE BY ID ENDPOINT
     @GetMapping("/{id}")
     public ResponseEntity<FileMetadata> getFileById(@PathVariable Long id) {
         try {
