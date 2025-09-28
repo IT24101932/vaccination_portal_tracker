@@ -22,6 +22,10 @@
             font-weight: 700;
             line-height: 1.2;
             letter-spacing: -0.015em;
+            text-decoration: none;
+        }
+        .brand-name:hover {
+            color: #4CAF50;
         }
         .nav-container {
             display: flex;
@@ -284,21 +288,23 @@
 <body>
 <header class="header d-flex justify-content-between align-items-center">
     <div class="d-flex align-items-center gap-3">
-        <h2 class="brand-name m-0">HealthFirst</h2>
+        <a href="/" style="text-decoration: none;">
+            <h2 class="brand-name m-0">HealthFirst</h2>
+        </a>
     </div>
     <div class="nav-container">
         <nav class="d-flex gap-4">
-            <a class="nav-link" href="#">Dashboard</a>
+            <a class="nav-link" href="/">Dashboard</a>
         </nav>
         <div class="dropdown">
             <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-bars me-2"></i>Menu
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#"><i class="fas fa-calendar-plus me-2"></i>Schedule Appointments</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fas fa-syringe me-2"></i>My Vaccine Progress</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fas fa-file-medical me-2"></i>Records</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fas fa-vial me-2"></i>Vaccine Availability</a></li>
+                <li><a class="dropdown-item" href="#" onclick="showComingSoon()"><i class="fas fa-calendar-plus me-2"></i>Schedule Appointments</a></li>
+                <li><a class="dropdown-item" href="#" onclick="showComingSoon()"><i class="fas fa-syringe me-2"></i>My Vaccine Progress</a></li>
+                <li><a class="dropdown-item" href="/wallet"><i class="fas fa-file-medical me-2"></i>Records</a></li>
+                <li><a class="dropdown-item" href="#" onclick="showComingSoon()"><i class="fas fa-vial me-2"></i>Vaccine Availability</a></li>
             </ul>
         </div>
         <div class="dropdown">
@@ -382,6 +388,62 @@
 
     // Store current file for preview/download
     let currentPreviewFile = null;
+
+    function showComingSoon() {
+        alert('This feature is coming soon! Currently, only Medical Records is available.');
+        return false; // Prevent navigation
+    }
+
+    function showAlert(message, type = 'info') {
+        // Try to find existing alert div
+        var alertDiv = document.getElementById('alert');
+
+        // If alert div doesn't exist, create it
+        if (!alertDiv) {
+            alertDiv = document.createElement('div');
+            alertDiv.id = 'alert';
+
+            // Create a container for alerts if it doesn't exist
+            var alertContainer = document.getElementById('alert-container');
+            if (!alertContainer) {
+                alertContainer = document.createElement('div');
+                alertContainer.id = 'alert-container';
+                alertContainer.style.position = 'fixed';
+                alertContainer.style.top = '20px';
+                alertContainer.style.right = '20px';
+                alertContainer.style.zIndex = '1000';
+                document.body.appendChild(alertContainer);
+            }
+
+            alertContainer.appendChild(alertDiv);
+        }
+
+        // Set alert content and attributes
+        alertDiv.setAttribute("role", "alert");
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+        alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+
+        // Show the alert
+        alertDiv.style.display = 'block';
+
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            if (alertDiv.parentElement) {
+                alertDiv.parentElement.removeChild(alertDiv);
+            }
+        }, 5000);
+    }
+
+    function formatFileSize(bytes) {
+        if (!bytes) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         // Get DOM elements
@@ -518,7 +580,7 @@
             }
         }
 
-        // DELETE FILE FUNCTION - ADD THIS MISSING FUNCTION
+        // DELETE FILE FUNCTION
         async function deleteFile(fileData) {
             if (!confirm(`Are you sure you want to delete "${fileData.originalFileName}"?`)) {
                 return; // User cancelled deletion
@@ -599,7 +661,7 @@
                     fileType = 'Image';
                 } else if (fileData.fileType === 'application/pdf') {
                     fileType = 'PDF';
-                } else if (fileData.fileType.startsWith('text/')) {
+                } else if (fileData.fileType && fileData.fileType.startsWith('text/')) {
                     fileType = 'Text';
                 } else {
                     fileType = fileData.fileType;
@@ -704,57 +766,6 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        }
-
-        function formatFileSize(bytes) {
-            if (!bytes) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-
-        function showAlert(message, type = 'info') {
-            // Try to find existing alert div
-            var alertDiv = document.getElementById('alert');
-
-            // If alert div doesn't exist, create it
-            if (!alertDiv) {
-                alertDiv = document.createElement('div');
-                alertDiv.id = 'alert';
-
-                // Create a container for alerts if it doesn't exist
-                var alertContainer = document.getElementById('alert-container');
-                if (!alertContainer) {
-                    alertContainer = document.createElement('div');
-                    alertContainer.id = 'alert-container';
-                    alertContainer.style.position = 'fixed';
-                    alertContainer.style.top = '20px';
-                    alertContainer.style.right = '20px';
-                    alertContainer.style.zIndex = '1000';
-                    document.body.appendChild(alertContainer);
-                }
-
-                alertContainer.appendChild(alertDiv);
-            }
-
-            // Set alert content and attributes
-            alertDiv.setAttribute("role", "alert");
-            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
-            alertDiv.innerHTML = `
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            `;
-
-            // Show the alert
-            alertDiv.style.display = 'block';
-
-            // Auto-remove after 5 seconds
-            setTimeout(() => {
-                if (alertDiv.parentElement) {
-                    alertDiv.parentElement.removeChild(alertDiv);
-                }
-            }, 5000);
         }
 
         // Set download button functionality for modal
