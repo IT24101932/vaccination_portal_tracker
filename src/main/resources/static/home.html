@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthFirst - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Your existing CSS styles */
+        body {
+            font-family: Inter, "Noto Sans", sans-serif;
+            background-color: #fafafa;
+            min-height: 100vh;
+        }
+        .header {
+            border-bottom: 1px solid #ededed;
+            padding: 12px 40px;
+        }
+        .brand-name {
+            color: #141414;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 32px;
+            align-items: center;
+        }
+        .dropdown-menu {
+            border-radius: 12px;
+            border: 1px solid #dbdbdb;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .dropdown-item {
+            padding: 12px 20px;
+            font-size: 14px;
+            color: #141414;
+        }
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #141414;
+        }
+        .dropdown-toggle {
+            background: none;
+            border: none;
+            color: #141414;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        .dropdown-toggle:hover {
+            background-color: #f0f0f0;
+        }
+        .user-profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .user-profile:hover {
+            border-color: #141414;
+        }
+        .main-container {
+            padding: 60px 160px;
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .welcome-title {
+            color: #141414;
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+        .welcome-subtitle {
+            color: #6c757d;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.5;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .menu-card {
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .menu-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            border-color: #4CAF50;
+            text-decoration: none;
+            color: inherit;
+        }
+        .menu-icon {
+            width: 64px;
+            height: 64px;
+            background-color: #f0f9ff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: #4CAF50;
+            font-size: 24px;
+        }
+        .menu-title {
+            color: #141414;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
+            margin-bottom: 8px;
+        }
+        .menu-description {
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+        .coming-soon {
+            opacity: 0.6;
+            position: relative;
+        }
+        .coming-soon::after {
+            content: "Coming Soon";
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ff6b6b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #ededed;
+            padding: 24px 40px;
+            text-align: center;
+        }
+        .footer-text {
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        @media (max-width: 1200px) {
+            .main-container {
+                padding: 60px 80px;
+            }
+        }
+        @media (max-width: 992px) {
+            .main-container {
+                padding: 40px 40px;
+            }
+            .welcome-title {
+                font-size: 36px;
+            }
+        }
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 40px 16px;
+            }
+            .header {
+                padding: 12px 16px;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .welcome-title {
+                font-size: 32px;
+            }
+            .welcome-subtitle {
+                font-size: 16px;
+                margin-bottom: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="header d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-3">
+        <a href="/" style="text-decoration: none;">
+            <h2 class="brand-name m-0">HealthFirst</h2>
+        </a>
+    </div>
+    <div class="nav-container">
+        <nav class="d-flex gap-4">
+            <a class="nav-link" href="/" style="color: #4CAF50; font-weight: 500;">Dashboard</a>
+        </nav>
+        <div class="dropdown">
+            <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-bars me-2"></i>Menu
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" onclick="showComingSoon()"><i class="fas fa-calendar-plus me-2"></i>Schedule Appointments</a></li>
+                <li><a class="dropdown-item" href="#" onclick="showComingSoon()"><i class="fas fa-syringe me-2"></i>My Vaccine Progress</a></li>
+                <li><a class="dropdown-item" href="wallet.html"><i class="fas fa-file-medical me-2"></i>Records</a></li>
+                <li><a class="dropdown-item" href="#" onclick="showComingSoon()"><i class="fas fa-vial me-2"></i>Vaccine Availability</a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <div class="user-profile dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                JD
+            </div>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>My Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<main class="main-container">
+    <div class="content-container">
+        <h1 class="welcome-title">Welcome to HealthFirst</h1>
+        <p class="welcome-subtitle">
+            Your comprehensive vaccination portal. Manage your health records, schedule appointments,
+            and track your vaccination progress all in one place.
+        </p>
+
+        <div class="menu-grid">
+            <a href="#" class="menu-card coming-soon" onclick="showComingSoon()">
+                <div class="menu-icon">
+                    <i class="fas fa-calendar-plus"></i>
+                </div>
+                <h3 class="menu-title">Schedule Appointments</h3>
+                <p class="menu-description">Book your vaccination appointments at convenient times and locations</p>
+            </a>
+
+            <a href="#" class="menu-card coming-soon" onclick="showComingSoon()">
+                <div class="menu-icon">
+                    <i class="fas fa-syringe"></i>
+                </div>
+                <h3 class="menu-title">My Vaccine Progress</h3>
+                <p class="menu-description">Track your vaccination history and upcoming doses</p>
+            </a>
+
+            <a href="wallet.html" class="menu-card">
+                <div class="menu-icon">
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                <h3 class="menu-title">Medical Records</h3>
+                <p class="menu-description">Upload, view, and manage your health documents</p>
+            </a>
+
+            <a href="#" class="menu-card coming-soon" onclick="showComingSoon()">
+                <div class="menu-icon">
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                <h3 class="menu-title">Health Resources</h3>
+                <p class="menu-description">Access health education materials and resources</p>
+            </a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p class="footer-text m-0">© 2024 HealthFirst Vaccination Portal. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function showComingSoon() {
+        alert('This feature is coming soon! Currently, only Medical Records is available.');
+        return false; // Prevent navigation
+    }
+
+    // Simple alert system for notifications
+    function showAlert(message, type = 'info') {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+        alertDiv.style.position = 'fixed';
+        alertDiv.style.top = '20px';
+        alertDiv.style.right = '20px';
+        alertDiv.style.zIndex = '1000';
+        alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        document.body.appendChild(alertDiv);
+
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            if (alertDiv.parentElement) {
+                alertDiv.parentElement.removeChild(alertDiv);
+            }
+        }, 3000);
+    }
+</script>
+</body>
+</html>
