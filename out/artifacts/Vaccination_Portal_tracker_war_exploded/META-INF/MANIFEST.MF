@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: My
+Build-Jdk: Microsoft OpenJDK 21.0.8
+Implementation-Title: Vaccination Portal Tracker
+Implementation-Version: 1.0.0
+Implementation-Vendor-Id: com.vaccination_portal_tracker
+Main-Class: ${start-class}
+
